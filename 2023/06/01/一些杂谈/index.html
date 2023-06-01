@@ -1,103 +1,34 @@
-<!DOCTYPE html>
-<html lang="zh-cmn-Hans">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>一些杂谈 | 碎碎念和胡思乱想的集合点</title>
-  
-  
-  
-  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
-  
-<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+extends partial/layout
 
-  
-<link rel="stylesheet" href="/css/style.css">
+include mixins
 
-<meta name="generator" content="Hexo 6.3.0"></head>
+block site_title
+    != page.title + " · " + config.title
 
-<body>
-<div class="Shell">
-    <aside class='SideBar'>
-    <section class='avatar' style="background-image: url()">
-        <div class='av-pic' style="background-image: url()">
-        </div>
-    </section>
-    <section class='menu'>
-        <div>碎碎念和胡思乱想的集合点</div>
-        
-        <ul>
-          
-            <a href="/" class="Btn">
-              <li>Home</li>
-            </a>  
-          
-            <a href="/archives/" class="Btn">
-              <li>Archive</li>
-            </a>  
-          
-        </ul>
-    </section>
-    <section class="media">
-        
-    </section>
-</aside>
+block description
+    - var desc = page.desc || strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150);
+    meta(name="description", content=desc)
 
-    <div class="container">
-        <div data-pager-shell>
-            <div>
-  <article class='ContentView'>
-    <header class='PageTitle'>
-        <h1>一些杂谈</h1>
-    </header>
-
-    <section>
-      <p>各位晚上好！在这里随便写一点东西。<br>一、这个网站的用途<br>其实叫个人博客更合适一点，主要用来记录一些自己的想法和杂七杂八的碎东西。当然欢迎各位能把自己的笔迹也放上来供大家欣赏。<br>二、这个网站的含义<br>刚开始其实注册域名的时候还蛮纠结的（主要是穷B没钱买com一类的顶级域名）后来看到这个.icu还挺便宜的就用这个当基础了。这个域名后缀官方给的解释是I see you，但我更倾向于把它理解做Intensive Care Unit（加护病房），然后前面再加上diazepam（地西泮）就是现在这个样子了。<br>三、更新问题<br>不定期更新，主要看自己想到什么写出来什么了~<br>其实这个网站里面写的东西更多当练手了，有的时候会像狗语（取决于写作时候的精神状态）当然我会好好努力写出来真情实感的东西的。<br>有时候会尝试模仿一下公文写作，正式一点的东西尝试一下正式的格式。<br>四、其他问题<br>没了，有什么问题和想知道的欢迎您提出，会好好更新的！</p>
-
-
-      
-
-    </section>
-    
-      <section class='ArticleMeta'>
-          <div>
-            发布于&nbsp;
-            <time datetime="2023-06-01T09:38:35.000Z" itemprop="datePublished">
-              2023-06-01
-            </time>
-          </div>
-          
-      </section>
-    
-    
-</article>
-
-  
-</div>
-
-            <footer>
-    <div>© 2023 - Tetramethyl-benzidine </div>
-    <div>
-        <span>
-            Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
-        </span>
-        ,
-        <span>
-            Theme - <a target="_blank" rel="noopener" href="https://github.com/nameoverflow/hexo-theme-icalm">Icalm</a>
-        </span>
-    </div>
-</footer>
-
-        </div>
-    </div>
-</div>
-
-<script src="/js/pager/dist/singlepager.js"></script>
-
-<script>
-var sp = new Pager('data-pager-shell')
-
-</script>
-</body>
-</html>
+block content
+  .autopagerize_page_element: .content: .post-page
+    include mixins
+    +make_post(page, true)
+    .share
+      .evernote
+        a.fa.fa-bookmark(href="",onclick="javascript:join_favorite()", ref="sidebar")
+      .weibo
+        a.fa.fa-weibo(href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));")
+      .twitter
+        a.fa.fa-twitter(href=url_for("http://twitter.com/home?status="+","+config.url+"/"+page.path+","+config.title+","+page.title+",;"))
+    - var prev = page.prev ? page.prev.path : false;
+    - var next = page.next ? page.next.path : false;
+    .pagination
+      ul.clearfix
+        if prev
+          li.pre.pagbuttons
+            a.btn(role="navigation",href=url_for(prev), title=page.prev.title)!= __('prev_post')
+        if next
+          li.next.pagbuttons
+            a.btn(role="navigation",href=url_for(next), title=page.next.title)!= __('next_post')
+    if page.comments
+        include partial/comments

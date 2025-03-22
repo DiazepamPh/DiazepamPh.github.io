@@ -1,108 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>堂堂复活！ | 碎碎念和胡思乱想的集合点</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="孩子们我打赢复活赛了（不是） 现在从法国佬那里薅了一个长期域名，这下穷B再也不用担心付费问题了。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="堂堂复活！">
-<meta property="og:url" content="http://example.com/2025/03/22/Reborn/index.html">
-<meta property="og:site_name" content="碎碎念和胡思乱想的集合点">
-<meta property="og:description" content="孩子们我打赢复活赛了（不是） 现在从法国佬那里薅了一个长期域名，这下穷B再也不用担心付费问题了。">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-03-22T06:26:39.000Z">
-<meta property="article:modified_time" content="2025-03-22T07:46:44.907Z">
-<meta property="article:author" content="Tetramethyl-benzidine">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="碎碎念和胡思乱想的集合点" type="application/atom+xml">
-  
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0.css">
+extends base
 
-  
-<link rel="stylesheet" href="/lib/fancybox/dist/jquery.fancybox.min.css">
+block nav
+    - var pageName = "POST"
+    include _partial/menu
 
-  
-<link rel="stylesheet" href="/css/main.css">
+block header
+    - var pageHeader = page.title
+    include _partial/body_header
 
-  
-<script src="/lib/jquery/dist/jquery.min.js"></script>
-
-  
-  
-  
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
-<body>
-  <div id="wrapper">
-    <header id="header" class="clearfix">
-	<a id="logo" href="/" title="碎碎念和胡思乱想的集合点">碎碎念和胡思乱想的集合点</a>
-	
-	<nav id="nav-menu" class="clearfix">
-		<form id="search" method="post" action="./" role="search">
-			<input id="search-input" type="text" name="s" class="inputbox" value="Search" onfocus="if (value =='Search'){value =''}" onblur="if (value ==''){value='Search'}">
-		</form>
-		<ul>
-      
-				
-        <li><a class="main-nav-link" href="/">Home</a></li>
-      
-				
-        <li><a class="main-nav-link" href="/archives">Archives</a></li>
-      
-		</ul>
-	</nav>
-</header>
-    <section id="main" class="clearfix"><article class="post-detail">
-  <h1 class="post-title"><a href="/">堂堂复活！</a></h1>
-  <ul class="post-meta">
-  <li><i class="fa fa-user"></i> Author Tetramethyl-benzidine</li>
-  <li><i class="fa fa-calendar"></i> Date Mar 22</li>
-  <li><i class="fa fa-folder"></i> Categories
-  
-    no_categories
-  
-  </li>
-</ul>
-  <div class="post-content">
-      
-      <p><strong>孩子们我打赢复活赛了（不是）</strong></p>
-<p>现在从法国佬那里薅了一个长期域名，这下穷B再也不用担心付费问题了。</p>
-<span id="more"></span>
-
-<!--more-->哈哈懒鬼懒了两年了一直都没更新，拖到上一个域名都过期了也没写几篇，希望这次可以好好写点东西吧，来打个赌试试这次我能更新多少篇（嘻嘻）
-
-  </div>
-  
-
-</article>
-
-<!-- Comments -->
-
-<!-- End Comments --></section>
-    <footer id="footer" role="contentinfo">
-    <div>&copy; 2025 <a href="/">碎碎念和胡思乱想的集合点</a>.
-    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Designed by <a href="http://rainylog.com" target="_blank">Rainy.</a>
-	</div>
-</footer><!-- end #footer -->
-
-  </div>
-  
-<script src="/lib/fancybox/dist/jquery.fancybox.min.js"></script>
-
-
-  
-<script src="/js/helper.js"></script>
-
-  
-<script src="/js/_third-party/gitment.js"></script>
-
-</body>
-</html>
+block content
+    div.body__content
+        if page.tags.length > 0
+            div.body__item.post_tags
+                for tag in page.tags.toArray()
+                    a(href=url_for(tag.path) class="post_tag")= tag.name
+        if page.content.length > 0
+            div.body__item
+                != page.more
+    div#disqus_thread
